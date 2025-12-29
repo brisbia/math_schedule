@@ -1,0 +1,43 @@
+1. Go to http://ibm.biz/CPLEXonAI, new link https://www.ibm.com/academic/topic/data-science.  Scroll down, click on Software on left side of page.  Click on the arrow on the square for ILOG CPLEX Optimization Studio.  Register an academic account with UWEC email.  Go back to the website, download the appropriate installer for your OS.  Use HTTP download rather than download manager.
+
+2. Run the CPLEX installer.  On last page, save the instruction about how to link to python.
+
+3. Add Python to PATH.  In Windows:  Right-click Start Menu, click on "System."  Click "Advanced System Settings" on right side (will need to enable admin account at myusername.uwec.edu).  Environment Variables... Under System Variables, add .PY to PATHEXT and C:\Program Files\Python310\Scripts and C:\Program Files\Python310\ to PATH.
+Possibly also these:
+C:\Program Files\IBM\ILOG\CPLEX_Optimizer221\opl\bin\x64_win64
+C:\Program Files\IBM\ILOG\CPLEX_Optimizer221\opl\oplide\
+C:\Program Files\IBM\ILOG\CPLEX_Optimizer221\cplex\bin\x64_win64
+C:\Program Files\IBM\ILOG\CPLEX_Optimizer221\cpoptimizer\bin\x64_win64
+
+4. From terminal (not Anaconda command prompt), run 
+python "C:\Program Files\IBM\ILOG\CPLEX_Optimizer221\python\setup.py" install
+(Might need ./python instead.  If this runs successfully, then you did step 3 correctly.)
+
+5. In a Jupyter notebook, run
+%cd "C:\Program Files\IBM\ILOG\CPLEX_Optimizer221\cplex\python\3.7\x64_win64"
+!pip install .
+(Annabelle found this didn't work.)
+
+5a.  If you need an older version of Python, look for one with a binary installer.  3.7.9 has one:  https://www.python.org/downloads/release/python-379/
+Still working on how to get Jupyter to make use of the different version.
+In file explorer or Finder, find anaconda3, remove pkgs (and environments, if it exists) from here to uninstall the new version of Python.  In Anaconda command prompt/Terminal, run conda install python=3.7.9.  On Annabelle's computer, this took an hour and a half!
+
+Create a separate Jupyter environment for the older version of Python.  Use this link that Annabelle found:  https://sites.northwestern.edu/researchcomputing/resources/adding-python-3-to-jupyter-notebook/.  Re-install docplex in the new environment.  In anaconda command prompt:  conda activate p3workshop, then pip install docplex.  Then, need to start Jupyter from Anaconda command line using conda activate p3workshop, then jupyter notebook.
+
+6. Go back to Advanced System Settings -> Environment Variables.  Add this to PYTHONPATH:
+C:\Program Files\IBM\ILOG\CPLEX_Optimizer221\cplex\python\3.7\x64_win64\
+(or do this before step 5?)
+
+7. Log out of computer and log back in.  Try running nurses_pandas.  The cell with the model solver may complain about not finding Docplex.  If so, go to Anaconda command prompt and run
+pip install docplex==2.23.222
+(I actually installed an older version [without doing any new downloads] and then re-installed 2.23.222.)
+
+
+___________________________
+9 Dec 2022--Notes on getting CPLEX on my new computer
+1. Update PATH and PYTHONPATH as before.
+2. Need to do *pip install cplex* to get the Community edition installed.
+3. When installing the connection to Python, use
+C:\programdata\anaconda3\python "C:\Program Files\IBM\ILOG\CPLEX_Studio221\python\setup.py" install
+in the Command Prompt (not Anaconda Command Prompt)
+to connect it to the version of Python *in Anaconda*, not the freestanding 3.10 version.  (We also used python "C:\Program Files\IBM\ILOG\CPLEX_Studio221\python\setup.py" install first; not sure if this was important or not.)
